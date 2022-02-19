@@ -21,3 +21,8 @@ Here is a snapshot of the power spectrum movie:
 Here is a snapshot of the correlation function movie:
 
 ![Screenshot 2022-02-19 at 15 42 25](https://user-images.githubusercontent.com/22989643/154805674-74692ea8-d014-42ca-baa4-25b63fc45091.png)
+
+
+
+https://user-images.githubusercontent.com/22989643/154807965-cadb654e-1feb-4abe-878f-54d30783dc52.mp4
+
