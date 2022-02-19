@@ -6,11 +6,11 @@ Requires:
 - hankl 
 - ffmpeg
 
-First, we need to run camb to obtain transfer functions and derived parameters:
+First, we need to run camb to obtain transfer functions and derived parameters. This writes a ~100Mb pickle format file containing the outputs. 
 
 `python write_camb_transfer_functions.py `
 
-Then, we make the movies 
+Then, we make the movies running:
 
 `python make_movies.py`
 
