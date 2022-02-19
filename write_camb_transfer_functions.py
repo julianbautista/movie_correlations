@@ -6,7 +6,7 @@ import hankl
 import pickle 
 plt.ion()
 
-output_file = 'pk_xi_2022_02_17.pkl'
+output_file = 'camb_outputs.pkl'
 
 def save(output, filename): 
     pickle.dump(output, open(filename, 'wb'))
