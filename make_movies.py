@@ -189,7 +189,7 @@ def save_anim(anim, fname, fps=60, **kwargs):
     anim.save(fname, writer=writermp4, **kwargs)
 
 
-data = load('pk_xi_2022_02_17.pkl')
+data = load('camb_outputs.pkl')
 
 print('Making pk video....')
 anim = pk_animation(data, scale_k=0, i_range = np.arange(500, 1000), interval=100)
