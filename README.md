@@ -10,19 +10,22 @@ First, we need to run camb to obtain transfer functions and derived parameters. 
 
 `python write_camb_transfer_functions.py `
 
+
+
 Then, we make the movies running:
 
 `python make_movies.py`
 
-Here is a snapshot of the power spectrum movie:
 
-![Screenshot 2022-02-19 at 15 41 48](https://user-images.githubusercontent.com/22989643/154805670-c012053f-c910-47ff-a626-a4613143e2ed.png)
-
-Here is a snapshot of the correlation function movie:
-
-![Screenshot 2022-02-19 at 15 42 25](https://user-images.githubusercontent.com/22989643/154805674-74692ea8-d014-42ca-baa4-25b63fc45091.png)
+Here is the power spectrum movie:
 
 
+https://user-images.githubusercontent.com/22989643/155038475-a98811b2-cb32-44b3-993d-b93ade777ed2.mp4
 
-https://user-images.githubusercontent.com/22989643/154807965-cadb654e-1feb-4abe-878f-54d30783dc52.mp4
+
+Here is the correlation function movie:
+
+https://user-images.githubusercontent.com/22989643/155038502-40a8d110-eed7-4b69-bb2d-e02f87bc33e1.mp4
+
+
 
