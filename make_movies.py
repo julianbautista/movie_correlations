@@ -4,14 +4,12 @@ from matplotlib import animation
 import matplotlib.cm as cm
 from matplotlib.animation import FuncAnimation
 import pickle 
+import os
 
 #plt.ion()
-
-
 def load(filename):
     output = pickle.load(open(filename, 'rb'))
     return output
-
 
 def simple_animation():
     fig, ax = plt.subplots()
@@ -33,8 +31,6 @@ def simple_animation():
                         init_func=init, blit=True)
     plt.show()
 
-
-
 def xi_animation(data, rmin=0, rmax=300, i_range=None, interval=30):
 
     r = data['r']
@@ -46,7 +42,7 @@ def xi_animation(data, rmin=0, rmax=300, i_range=None, interval=30):
     conformal_time = data['conformal_time']
     sound_horizon = data['sound_horizon']
     redshifts = data['redshifts']
-    names = ['Baryons', 'Cold Dark Matter', 'Photons', 'Neutrinos']#, 'Total Matter']
+    names = ['Baryons', 'Cold Dark Matter', 'Photons', 'Neutrinos', 'Total Matter']
     n_species = len(names)
 
     c_ls = {'Baryons': ['C0','-'], 
@@ -68,7 +64,7 @@ def xi_animation(data, rmin=0, rmax=300, i_range=None, interval=30):
 
     def init():
 
-        ax.set_xlim(0, 300)
+        ax.set_xlim(0, rmax)
         #ydata = xi[:, i_range[0], i_species] * r**2
         #ax.set_ylim(np.min(ydata), np.max(ydata))
         #line.set_data(r, ydata)
@@ -127,7 +123,7 @@ def pk_animation(data, kmin=1e-4, kmax=10, scale_k=2, y_logscale=False,
     conformal_time = data['conformal_time']
     sound_horizon = data['sound_horizon']
     redshifts = data['redshifts']
-    names = ['Baryons', 'Cold Dark Matter', 'Photons', 'Neutrinos']#, 'Total Matter']
+    names = ['Baryons', 'Cold Dark Matter', 'Photons', 'Neutrinos', 'Total Matter']
     n_species = len(names)
 
     c_ls = {'Baryons': ['C0','-'], 
@@ -202,20 +198,29 @@ def save_anim(anim, fname, fps=60, **kwargs):
     writermp4 = animation.FFMpegWriter(fps=fps)
     anim.save(fname, writer=writermp4, **kwargs)
 
+#def main():
+suffix = 'mnu0.10'
+camb_file = f'camb_outputs/camb_outputs_{suffix}.pkl'
+print(f'Reading camb output from: {camb_file}')
+data = load(camb_file)
 
-data = load('camb_outputs.pkl')
+os.makedirs('movies', exist_ok=True)
 
-print('Making pk video....')
-anim = pk_animation(data, scale_k=0, y_logscale=False, i_range = np.arange(500, 1000), interval=100)
-save_anim(anim, 'pk_movie_ylinear.mp4', fps=30, dpi=200)
+#print('Making video of pk linear scale....')
+#anim = pk_animation(data, scale_k=0, y_logscale=False, i_range = np.arange(500, 1000), interval=100)
+#save_anim(anim, f'movies/pk_movie_ylinear_{suffix}.mp4', fps=30, dpi=200)
 #plt.show()
 
-print('Making pk video....')
+print('Making video of pk log scale....')
 anim = pk_animation(data, scale_k=0, y_logscale=True, i_range = np.arange(500, 1000), interval=100)
-save_anim(anim, 'pk_movie_ylog.mp4', fps=30, dpi=200)
+movie_name = f'movies/pk_movie_ylog_{suffix}.mp4'
+save_anim(anim, movie_name, fps=30, dpi=200)
 #plt.show()
+print(f'Movie exported at: {movie_name}')
 
 print('Making xi video....')
-anim_xi = xi_animation(data, i_range = np.arange(500, 1000), interval=100)
-save_anim(anim_xi, 'xi_movie.mp4', fps=30, dpi=200)
+anim_xi = xi_animation(data, rmax=300, i_range = np.arange(500, 1000), interval=100)
+movie_name = f'movies/xi_movie_{suffix}.mp4'
+save_anim(anim_xi, movie_name, fps=30, dpi=200)
 #plt.show()
+print(f'Movie exported at: {movie_name}')

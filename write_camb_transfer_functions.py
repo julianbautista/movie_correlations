@@ -4,9 +4,8 @@ from matplotlib import pyplot as plt
 import camb
 import hankl
 import pickle 
+import os
 plt.ion()
-
-output_file = 'camb_outputs.pkl'
 
 def save(output, filename): 
     pickle.dump(output, open(filename, 'wb'))
@@ -15,6 +14,11 @@ def load(filename):
     output = pickle.load(open(filename, 'rb'))
     return output
 
+
+os.makedirs('camb_outputs', exist_ok=True)
+output_file = 'camb_outputs/camb_outputs_mnu0.10.pkl'
+accuracy = 3
+
 pars = camb.CAMBparams(scalar_initial_condition='initial_adiabatic')
 pars_cosmo = {'ombh2': 0.0224, 
               'omch2': 0.120, 
@@ -22,18 +26,19 @@ pars_cosmo = {'ombh2': 0.0224,
               'tau': 0.054, 
               'cosmomc_theta':1.0411/100,
               'omk':0,
+              'nnu': 3.046,
+              'mnu':0.10, 
               }
 pars_init = {'As': np.exp(3.043)*1e-10, 
              'ns': 0.9652}
 
-accuracy = 3
 pars.set_cosmology(H0=None, **pars_cosmo)
 pars.InitPower.set_params(r=0, **pars_init)
 pars.set_accuracy(AccuracyBoost=accuracy, lAccuracyBoost=accuracy)
 
 pars.set_matter_power(redshifts=[0.], kmax=10.0)
 results = camb.get_results(pars)
-kh, _, pk0 = results.get_matter_power_spectrum(minkh=1e-3, maxkh=1, npoints = 200)
+kh, _, pk0 = results.get_matter_power_spectrum(minkh=1e-3, maxkh=1, npoints = 512)
 
 data = camb.get_transfer_functions(pars)
 
@@ -63,23 +68,17 @@ print(f'Done in {(time1-time0)/60:.3f} minutes.')
 eta = data.conformal_time(redshifts)
 sound_horizon = data.sound_horizon(redshifts)
 
-h = pars.h
-pk_init = 4/9*pars_init['As']*(ks/0.05)**(pars_init['ns']-1) * (2*np.pi**2/ks**3)
 
-pk_final = pk_init[:, None, None] * evolution**2 /h**3
+#-- Corrected by Thibaut Louis 2023/03/20
+pk_init = pars_init['As'] * (ks / (0.05)) ** (pars_init['ns'] - 1) * (2 * np.pi ** 2 / ks ** 3) #initial condition given in term of R
+pk_final = pk_init[:, None, None] * evolution ** 2
 
-#-- Adiabatic initial conditions
+#-- Adiabatic initial conditions  delta_i / (1+w_i) = delta_j / (1+w_j)
 
-#-- baryons
-pk_final[:, :, 0] *= (2/3)**2
-#-- cdm
-pk_final[:, :, 1] *= (2/3)**2
 #-- photons
-pk_final[:, :, 2] *= 1/4
+pk_final[:, :, 2] *= (3/4)**2
 #-- neutrinos
-pk_final[:, :, 3] *= 1/4
-#-- Total matter (not correct)
-pk_final[:, :, 4] *= 2/4
+pk_final[:, :, 3] *= (3/4)**2
 
 
 time2 = time.time()
@@ -111,3 +110,4 @@ for k in derived_params:
 
 
 save(output, output_file)
+print(f'Output written at: {output_file}')
