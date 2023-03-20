@@ -21,7 +21,7 @@ Here is the power spectrum movie:
 
 https://github.com/julianbautista/movie_correlations/blob/main/movies/pk_movie_ylog_mnu0.10.mp4
 
-
+https://github.com/julianbautista/movie_correlations/blob/main/movies/pk_movie_ylog_mnu0.10.mp4?raw=true
 
 Here is the correlation function movie:
 
