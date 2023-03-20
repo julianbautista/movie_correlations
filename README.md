@@ -19,11 +19,14 @@ Then, we make the movies running:
 
 Here is the power spectrum movie:
 
-![](https://github.com/julianbautista/movie_correlations/blob/main/movies/pk_movie_ylog_mnu0.10.mp4)
+https://user-images.githubusercontent.com/22989643/226380063-4d8e6fbe-a69f-41cd-b727-64c17636f5de.mp4
+
 
 
 Here is the correlation function movie:
 
-https://github.com/julianbautista/movie_correlations/blob/main/movies/xi_movie_mnu0.10.mp4
+https://user-images.githubusercontent.com/22989643/226380138-14fdccf6-9d1f-4738-8e47-9053aa9efebc.mp4
+
+
 
 
