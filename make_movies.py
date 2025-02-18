@@ -42,7 +42,9 @@ def xi_animation(data, rmin=0, rmax=300, i_range=None, interval=30):
     conformal_time = data['conformal_time']
     sound_horizon = data['sound_horizon']
     redshifts = data['redshifts']
-    names = ['Baryons', 'Cold Dark Matter', 'Photons', 'Neutrinos', 'Total Matter']
+    names = ['Baryons', 'Cold Dark Matter', 'Photons', 'Neutrinos',
+              #'Total Matter'
+              ]
     n_species = len(names)
 
     c_ls = {'Baryons': ['C0','-'], 
@@ -123,7 +125,9 @@ def pk_animation(data, kmin=1e-4, kmax=10, scale_k=2, y_logscale=False,
     conformal_time = data['conformal_time']
     sound_horizon = data['sound_horizon']
     redshifts = data['redshifts']
-    names = ['Baryons', 'Cold Dark Matter', 'Photons', 'Neutrinos', 'Total Matter']
+    names = ['Baryons', 'Cold Dark Matter', 'Photons', 'Neutrinos'
+            #, 'Total Matter'
+            ]
     n_species = len(names)
 
     c_ls = {'Baryons': ['C0','-'], 
@@ -199,28 +203,34 @@ def save_anim(anim, fname, fps=60, **kwargs):
     anim.save(fname, writer=writermp4, **kwargs)
 
 #def main():
-suffix = 'mnu0.10'
+suffix = 'mnu0.10_v2'
+do_pk_lin = False
+do_pk_log = False
+do_xi = True 
+
 camb_file = f'camb_outputs/camb_outputs_{suffix}.pkl'
 print(f'Reading camb output from: {camb_file}')
 data = load(camb_file)
 
 os.makedirs('movies', exist_ok=True)
 
-#print('Making video of pk linear scale....')
-#anim = pk_animation(data, scale_k=0, y_logscale=False, i_range = np.arange(500, 1000), interval=100)
-#save_anim(anim, f'movies/pk_movie_ylinear_{suffix}.mp4', fps=30, dpi=200)
-#plt.show()
+if do_pk_lin:
+    print('Making video of pk linear scale....')
+    anim = pk_animation(data, scale_k=0, y_logscale=False, i_range = np.arange(100, 1000), interval=100)
+    movie_name = f'movies/pk_movie_ylinear_{suffix}.mp4'
+    save_anim(anim, movie_name, fps=30, dpi=200)
+    print(f'Movie exported at: {movie_name}')
 
-print('Making video of pk log scale....')
-anim = pk_animation(data, scale_k=0, y_logscale=True, i_range = np.arange(500, 1000), interval=100)
-movie_name = f'movies/pk_movie_ylog_{suffix}.mp4'
-save_anim(anim, movie_name, fps=30, dpi=200)
-#plt.show()
-print(f'Movie exported at: {movie_name}')
+if do_pk_log:
+    print('Making video of pk log scale....')
+    anim = pk_animation(data, scale_k=0, y_logscale=True, i_range = np.arange(100, 1000), interval=100)
+    movie_name = f'movies/pk_movie_ylog_{suffix}.mp4'
+    save_anim(anim, movie_name, fps=30, dpi=200)
+    print(f'Movie exported at: {movie_name}')
 
-print('Making xi video....')
-anim_xi = xi_animation(data, rmax=300, i_range = np.arange(500, 1000), interval=100)
-movie_name = f'movies/xi_movie_{suffix}.mp4'
-save_anim(anim_xi, movie_name, fps=30, dpi=200)
-#plt.show()
-print(f'Movie exported at: {movie_name}')
+if do_xi:
+    print('Making xi video....')
+    anim_xi = xi_animation(data, rmax=300, i_range = np.arange(300, 1000), interval=100)
+    movie_name = f'movies/xi_movie_{suffix}.mp4'
+    save_anim(anim_xi, movie_name, fps=30, dpi=200)
+    print(f'Movie exported at: {movie_name}')

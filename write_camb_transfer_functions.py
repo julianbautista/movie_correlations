@@ -16,7 +16,7 @@ def load(filename):
 
 
 os.makedirs('camb_outputs', exist_ok=True)
-output_file = 'camb_outputs/camb_outputs_mnu0.10.pkl'
+output_file = 'camb_outputs/camb_outputs_mnu0.10_v2.pkl'
 accuracy = 3
 
 pars = camb.CAMBparams(scalar_initial_condition='initial_adiabatic')
@@ -43,7 +43,7 @@ kh, _, pk0 = results.get_matter_power_spectrum(minkh=1e-3, maxkh=1, npoints = 51
 data = camb.get_transfer_functions(pars)
 
 
-scale_factor  = 10**np.linspace(-10, 0, 1000)
+scale_factor  = 10**np.linspace(-7, 0, 1000)
 redshifts = 1/scale_factor - 1 
 
 nsteps = len(redshifts)
