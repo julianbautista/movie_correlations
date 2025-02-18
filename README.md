@@ -19,13 +19,20 @@ Then, we make the movies running:
 
 Here is the power spectrum movie:
 
-https://user-images.githubusercontent.com/22989643/226380063-4d8e6fbe-a69f-41cd-b727-64c17636f5de.mp4
+
+
+https://github.com/user-attachments/assets/678b9708-99e2-48af-87c6-164c145649d3
+
+
 
 
 
 Here is the correlation function movie:
 
-https://user-images.githubusercontent.com/22989643/226380138-14fdccf6-9d1f-4738-8e47-9053aa9efebc.mp4
+
+
+https://github.com/user-attachments/assets/034c8674-8687-4efd-ba26-05ed3a4bb246
+
 
 
 
